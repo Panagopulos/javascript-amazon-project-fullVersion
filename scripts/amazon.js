@@ -1,12 +1,11 @@
 // Variable of array including object which are representing properties for
 // the eshop items so we are able to loop through this array and generate
 // the html for all the different objects(items)
-
-
 let productsHTML = '';
 
-products.forEach((product) => {
-  productsHTML +=  `
+// forEach method connected to 'products' array including objects of shop items in file 'Data/products' 
+products.forEach((product) => {  
+  productsHTML +=  `          
     <div class="product-container">
             <div class="product-image-container">
               <img class="product-image"
@@ -60,5 +59,6 @@ products.forEach((product) => {
 
 console.log(productsHTML);
 
+// Using dom to showcase the final html we created on main page.
 document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
