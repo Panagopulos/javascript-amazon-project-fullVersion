@@ -50,7 +50,8 @@ products.forEach((product) => {
               Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-to-cart"
+            data-product-id="${product.id}">
               Add to Cart
             </button>
           </div>
@@ -62,3 +63,32 @@ console.log(productsHTML);
 // Using dom to showcase the final html we created on main page.
 document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
+
+  // Selecting all 'Add to Cart' button by using DOM and looping through them 
+  // Then adding to each button EventListener so it listen to click and when 
+  // that happens we save the unique ID we get from the data set attribute in
+  // our generated html into 'productId' variable 
+  document.querySelectorAll('.js-add-to-cart')
+    .forEach((button) => {
+      button.addEventListener('click', () => {
+       const productId = button.dataset.productId;
+
+       let matchingItem; // Creating matchingItem variable to save the item if it is the same as the one in cart
+       
+       cart.forEach((item) => {
+        if(productId === item.productId) {
+          matchingItem = item;
+        }  // Looping through cart items and comparing if the new productId is matching any productId in the cart
+       });
+
+       if (matchingItem) {
+        matchingItem.quantity += 1 // If there is alraedy matchingItem we increase the quantity by one
+       } else {
+        cart.push({ 
+          productId,
+          quantity: 1
+         });  // Else we push the new object(item) in the cart
+       }
+       console.log(cart); // checking if it it works
+      });
+    });
