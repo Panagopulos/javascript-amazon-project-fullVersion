@@ -89,6 +89,18 @@ document.querySelector('.js-products-grid')
           quantity: 1
          });  // Else we push the new object(item) in the cart
        }
+
+       // Making the shopping cart in the top right header interactive.
+       let cartQuantity = 0;
+
+       cart.forEach((item) => {
+        cartQuantity += item.quantity;
+       });
+
+       document.querySelector('.js-cart-quantity')
+        .innerHTML = cartQuantity;
+        
+       console.log(cartQuantity);
        console.log(cart); // checking if it it works
       });
     });
