@@ -1,3 +1,4 @@
+import {cart} from '../data/cart.js';
 // Variable of array including object which are representing properties for
 // the eshop items so we are able to loop through this array and generate
 // the html for all the different objects(items)
@@ -101,6 +102,6 @@ document.querySelector('.js-products-grid')
         .innerHTML = cartQuantity;
         
        console.log(cartQuantity);
-       console.log(cart); // checking if it it works
+       console.log(cart); // checking if it works
       });
     });
