@@ -1,4 +1,5 @@
 import {cart} from '../data/cart.js';
+import { products } from '../data/products.js';
 // Variable of array including object which are representing properties for
 // the eshop items so we are able to loop through this array and generate
 // the html for all the different objects(items)
