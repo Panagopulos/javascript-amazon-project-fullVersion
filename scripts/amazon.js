@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
 // Variable of array including object which are representing properties for
 // the eshop items so we are able to loop through this array and generate
@@ -66,6 +66,19 @@ console.log(productsHTML);
 document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
 
+  // Making the shopping cart in the top right header interactive.
+  function updateCartQuantity() {
+    let cartQuantity = 0;    //Variable to save the qunatity
+
+    cart.forEach((cartItem) => {
+     cartQuantity += cartItem.quantity;   // forEach loop that loops throught the cartItems and for  
+    });                                   // each item it ++ to cartQuantity
+
+    document.querySelector('.js-cart-quantity')
+     .innerHTML = cartQuantity;
+     console.log(cartQuantity)
+  }
+
   // Selecting all 'Add to Cart' button by using DOM and looping through them 
   // Then adding to each button EventListener so it listen to click and when 
   // that happens we save the unique ID we get from the data set attribute in
@@ -74,35 +87,10 @@ document.querySelector('.js-products-grid')
     .forEach((button) => {
       button.addEventListener('click', () => {
        const productId = button.dataset.productId;
-
-       let matchingItem; // Creating matchingItem variable to save the item if it is the same as the one in cart
        
-       cart.forEach((item) => {
-        if(productId === item.productId) {
-          matchingItem = item;
-        }  // Looping through cart items and comparing if the new productId is matching any productId in the cart
-       });
-
-       if (matchingItem) {
-        matchingItem.quantity += 1 // If there is alraedy matchingItem we increase the quantity by one
-       } else {
-        cart.push({ 
-          productId,
-          quantity: 1
-         });  // Else we push the new object(item) in the cart
-       }
-
-       // Making the shopping cart in the top right header interactive.
-       let cartQuantity = 0;
-
-       cart.forEach((item) => {
-        cartQuantity += item.quantity;
-       });
-
-       document.querySelector('.js-cart-quantity')
-        .innerHTML = cartQuantity;
+       addToCart(productId);
+       
+      updateCartQuantity();
         
-       console.log(cartQuantity);
-       console.log(cart); // checking if it works
       });
     });
