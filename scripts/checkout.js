@@ -16,7 +16,8 @@ cart.forEach((cartItem) => {
  });
 
  cartSummaryHTML += `
-    <div class="cart-item-container">
+    <div class="cart-item-container 
+      	js-cart-item-container-${matchingProduct.id}">
         <div class="delivery-date">
           Delivery date: Wednesday, June 15
         </div>
@@ -100,12 +101,23 @@ document.querySelector('.js-order-summary')  //DOM for generating the html
   /*
   DOM for the delete link  in which we then loop throug all (Delete(button) elements) assing them a unique dataset-id that we save inside productId
   which we can then use for determinetion of which product we want to delete
-  in removeFromCart() function;  */
+  in removeFromCart() function;  
+  
+  At the bottom.We again use DOM for the main container.In which we at the
+  top assinged matchingProduct.id while HTML is generated. Here we reassing
+  the id with productId (which is the item we want to delete) so it selectes
+  the whole container and prior to that we use Method - remove(); to delete
+  the container from the page.
+  */
   document.querySelectorAll('.js-delete-link') 
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
-        
         removeFromCart(productId);
+
+       const container = document.querySelector(
+          `.js-cart-item-container-${productId}`
+        );
+        container.remove();
       });
     });
