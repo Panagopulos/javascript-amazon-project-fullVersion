@@ -1,5 +1,6 @@
 import {cart, addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 // Variable of array including object which are representing properties for
 // the eshop items so we are able to loop through this array and generate
 // the html for all the different objects(items)
@@ -27,7 +28,7 @@ products.forEach((product) => {
             </div>
 
             <div class="product-price">
-              ${(product.priceCents / 100).toFixed(2)}
+              ${formatCurrency(product.priceCents)}
             </div>
 
             <div class="product-quantity-container">
