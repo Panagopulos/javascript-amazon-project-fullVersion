@@ -1,4 +1,4 @@
-export const cart = [{
+export let cart = [{
   productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
   quantity: 2,
 }, {
@@ -25,3 +25,22 @@ export function addToCart(productId) {
     }
     console.log(cart);
   }
+
+  // function for removing the product from the cart by using parametr 
+  // which we input in checkout.js at delete-link (dom) and here we
+  // Create new array in which after we add all the products we have in cart
+  // but not the one that we want to delete using IF statemant
+  // that's how we "delete" the  productId since it will not be pushed
+  // inside the newCart[array]. Also we had to change cart from const to let
+  // and assing it the new variable newCart
+  export function removeFromCart(productId) {
+    let newCart = [];
+
+    cart.forEach((cartItem) => {
+      if(cartItem.productId !== productId) {
+        newCart.push(cartItem)
+      }
+    });
+
+    cart = newCart;
+  };
