@@ -1,5 +1,5 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
-
+//add comment
 if(!cart) {
   cart = [{
     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -10,7 +10,7 @@ if(!cart) {
   }];
 }
 
-
+// add comment
 function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }

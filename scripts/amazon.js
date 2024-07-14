@@ -68,7 +68,7 @@ document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
 
   // Making the shopping cart in the top right header interactive.
-  function updateCartQuantity() {
+ export function updateCartQuantity() {
     let cartQuantity = 0;    //Variable to save the qunatity
 
     cart.forEach((cartItem) => {
@@ -77,7 +77,6 @@ document.querySelector('.js-products-grid')
 
     document.querySelector('.js-cart-quantity')
      .innerHTML = cartQuantity;
-     console.log(cartQuantity)
   }
 
   // Selecting all 'Add to Cart' button by using DOM and looping through them 

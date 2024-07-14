@@ -2,6 +2,7 @@ import { cart,removeFromCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
+
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
@@ -98,6 +99,8 @@ cart.forEach((cartItem) => {
 document.querySelector('.js-order-summary')  //DOM for generating the html
   .innerHTML = cartSummaryHTML;
 
+updateCartQuantity();
+
   /*
   DOM for the delete link  in which we then loop throug all (Delete(button) elements) assing them a unique dataset-id that we save inside productId
   which we can then use for determinetion of which product we want to delete
@@ -119,5 +122,17 @@ document.querySelector('.js-order-summary')  //DOM for generating the html
           `.js-cart-item-container-${productId}`
         );
         container.remove();
+        updateCartQuantity();
       });
     });
+
+    function updateCartQuantity() {
+    let cartQuantity = 0;
+
+    cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
+    });
+
+    document.querySelector('.js-return-to-home-link')
+      .innerHTML = `${cartQuantity} items`;
+  }
