@@ -1,4 +1,5 @@
-import {cart, addToCart} from '../data/cart.js';
+import { addToCart, 
+  calculateCartQuantity} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 // Variable of array including object which are representing properties for
@@ -68,16 +69,15 @@ document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
 
   // Making the shopping cart in the top right header interactive.
- export function updateCartQuantity() {
-    let cartQuantity = 0;    //Variable to save the qunatity
-
-    cart.forEach((cartItem) => {
-     cartQuantity += cartItem.quantity;   // forEach loop that loops throught the cartItems and for  
-    });                                   // each item it ++ to cartQuantity
+  function updateCartQuantity() {
+    
+    const cartQuantity = calculateCartQuantity();
 
     document.querySelector('.js-cart-quantity')
      .innerHTML = cartQuantity;
   }
+
+  updateCartQuantity();
 
   // Selecting all 'Add to Cart' button by using DOM and looping through them 
   // Then adding to each button EventListener so it listen to click and when 

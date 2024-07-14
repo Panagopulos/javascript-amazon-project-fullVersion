@@ -55,3 +55,14 @@ export function addToCart(productId) {
 
     saveToStorage();
   }
+
+   //Function for Calculating the quantity of the cart and then using it to manipulate with DOM in certain html areas like (checkout,amazon)
+  export function calculateCartQuantity() {
+    let cartQuantity = 0;
+
+    cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
+    });
+
+    return cartQuantity;
+  }
