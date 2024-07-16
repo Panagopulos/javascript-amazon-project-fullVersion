@@ -2,9 +2,6 @@ import { calculateCartQuantity,
   cart,removeFromCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions } from '../data/deliveryOptions.js';
-
 
 
 let cartSummaryHTML = '';
@@ -20,32 +17,11 @@ cart.forEach((cartItem) => {
   };
  });
 
- const deliveryOptionId = cartItem.
- deliveryOptionId;
-
- let deliveryOption;
-
- deliveryOptions.forEach((option) => {
-  if (option.id === deliveryOptionId) {
-    deliveryOption = option;
-  }
-
- });
-
-  const today = dayjs();                          //Initilizing dayjs library
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDays,                  //Saving the current option days (1,3,7)
-    'days'
-  );
-    const dateString = deliveryDate.format(
-    'dddd, MMMM, D'                               //Formating it into readable state
-  );
-
  cartSummaryHTML += `
     <div class="cart-item-container 
       	js-cart-item-container-${matchingProduct.id}">
         <div class="delivery-date">
-          Delivery date: ${dateString}
+          Delivery date: Wednesday, June 15
         </div>
 
         <div class="cart-item-details-grid">
@@ -77,56 +53,49 @@ cart.forEach((cartItem) => {
             <div class="delivery-options-title">
               Choose a delivery option:
             </div>
-              ${deliveryOptionsHTML(matchingProduct,cartItem)}
+
+            <div class="delivery-option">
+              <input type="radio" class="delivery-option-input"
+                name="delivery-option-${matchingProduct.id}">
+              <div>
+                <div class="delivery-option-date">
+                  Tuesday, June 21
+                </div>
+                <div class="delivery-option-price">
+                  FREE Shipping
+                </div>
+              </div>
+            </div>
+            <div class="delivery-option">
+              <input type="radio" checked class="delivery-option-input"
+                name="delivery-option-${matchingProduct.id}">
+              <div>
+                <div class="delivery-option-date">
+                  Wednesday, June 15
+                </div>
+                <div class="delivery-option-price">
+                  $4.99 - Shipping
+                </div>
+              </div>
+            </div>
+            <div class="delivery-option">
+              <input type="radio" 
+              class="delivery-option-input"
+                name="delivery-option-${matchingProduct.id}">
+              <div>
+                <div class="delivery-option-date">
+                  Monday, June 13
+                </div>
+                <div class="delivery-option-price">
+                  $9.99 - Shipping
+                </div>
+              </div>
+            </div>
           </div>
         </div>
     </div>
  `
 });
-// Function which generates the delivery option container including external library dayjs
-function deliveryOptionsHTML(matchingProduct, cartItem) {
-  let html = ''; // Variable where we save the whole HTML
-
-  // Looping through all deliveryOptions and there throught each object(deliveryOption) 
-  deliveryOptions.forEach((deliveryOption) => {  
-    const today = dayjs();                          //Initilizing dayjs library
-    const deliveryDate = today.add(
-      deliveryOption.deliveryDays,                  //Saving the current option days (1,3,7)
-      'days'
-    );
-    const dateString = deliveryDate.format(
-      'dddd, MMMM, D'                               //Formating it into readable state
-    );
-
-    const priceString = deliveryOption.priceCents   //Saving the properties of price of the shipping
-    === 0 
-    ? 'Free'                                        // If price == 0 it display free
-    : `$${formatCurrency(deliveryOption.priceCents)} - `; // else it shows the current price
-
-    // Boolean used in generated html to decide which option should be checked and avoid the conflict of all options checked
-    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
-
-    // Accumulator pattern, !matchingProdcut must be added as parameter! 
-    html +=
-    `
-    <div class="delivery-option">
-      <input type="radio"
-      ${isChecked ? 'checked' : ''}
-      class="delivery-option-input"
-        name="delivery-option-${matchingProduct.id}"> 
-      <div>
-        <div class="delivery-option-date">
-          ${dateString}
-        </div>
-        <div class="delivery-option-price">
-          ${priceString} Shipping
-        </div>
-      </div>
-    </div>
-    `
-  });
-  return html;
-};
 
 document.querySelector('.js-order-summary')  //DOM for generating the html
   .innerHTML = cartSummaryHTML;
@@ -157,7 +126,7 @@ updateCartQuantity();
         updateCartQuantity();
       });
     });
-    // Updating - Checkout(- this - part -)  element of the page.
+
     function updateCartQuantity() {
     
       const cartQuantity = calculateCartQuantity();
