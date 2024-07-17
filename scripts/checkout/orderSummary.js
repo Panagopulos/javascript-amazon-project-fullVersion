@@ -3,6 +3,7 @@ import { calculateCartQuantity,
 import { products, getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 export function renderOrderSummary() {
 
@@ -139,6 +140,8 @@ export function renderOrderSummary() {
           );
           container.remove();
           updateCartQuantity();
+
+          renderPaymentSummary();
         });
       });
 
@@ -158,6 +161,7 @@ export function renderOrderSummary() {
           const {productId, deliveryOptionId} = element.dataset; // Shorthand property to get the productId and deliveryOptionId from above to the function below 
           updateDeliveryOption(productId, deliveryOptionId); // Running the function from cart.js updates the Id of the the matchingItem.
           renderOrderSummary();
+          renderPaymentSummary();
         });
       });
 }
