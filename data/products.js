@@ -1,3 +1,16 @@
+export function getProduct(productId) {
+  
+  let matchingProduct;  // Here will be saved the final product which we will see in checkout page
+    // Looping through the products so we can compare the ids of the cart and products and If the product was added to the cart as a cartItem we save it as a final matchingProduct which we use inside cartSummaryHTML
+  products.forEach((product) => {
+    if(product.id === productId) {
+      matchingProduct = product;
+    };
+  });
+  
+  return matchingProduct;
+}
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

@@ -1,8 +1,8 @@
 import { calculateCartQuantity, 
   cart,removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import { products } from '../../data/products.js';
+import { products, getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 
 export function renderOrderSummary() {
 
@@ -11,23 +11,11 @@ export function renderOrderSummary() {
   cart.forEach((cartItem) => {
   const productId = cartItem.productId;  //Saving the productId of the single CartItem
 
-  let matchingProduct;  // Here will be saved the final product which we will see in checkout page
-    // Looping through the products so we can compare the ids of the cart and products and If the product was added to the cart as a cartItem we save it as a final matchingProduct which we use inside cartSummaryHTML
-  products.forEach((product) => {
-    if(product.id === productId) {
-      matchingProduct = product;
-    };
-  });
+  const matchingProduct = getProduct(productId);
 
   const deliveryOptionId = cartItem.deliveryOptionId;
 
-  let deliveryOption;
-  // Similiar as above looping through  each option and if deliveryOption have the same id as in cart(deliveryOptionId) we save it in deliveryOption and use it to generate time in the cartSummaryHTML 
-  deliveryOptions.forEach((option) => {
-    if (option.id === deliveryOptionId) {
-      deliveryOption = option;
-    }
-  });
+  const deliveryOption = getDeliveryOption(deliveryOptionId);
 
     const today = dayjs();
     const deliveryDate = today.add(

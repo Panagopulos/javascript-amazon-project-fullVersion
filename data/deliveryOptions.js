@@ -16,3 +16,15 @@ export const deliveryOptions = [{
   deliveryDays: 1,
   priceCents: 999
 }];
+
+export function getDeliveryOption(deliveryOptionId) {
+  let deliveryOption;
+  // Looping through each option and if deliveryOption have the same id as in cart(deliveryOptionId) we save it in deliveryOption and use it to generate time in the cartSummaryHTML and also price in PaymentSummary
+  deliveryOptions.forEach((option) => {
+    if (option.id === deliveryOptionId) {
+      deliveryOption = option;
+    }
+  });
+
+  return deliveryOption || deliveryOptions[0];
+}
