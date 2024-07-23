@@ -30,6 +30,7 @@ export function renderOrderSummary() {
 
   cartSummaryHTML += `
       <div class="cart-item-container 
+          js-cart-item-container
           js-cart-item-container-${matchingProduct.id}">
           <div class="delivery-date">
             Delivery date: ${dateString}
@@ -46,15 +47,17 @@ export function renderOrderSummary() {
               <div class="product-price">
                 ${formatCurrency(matchingProduct.priceCents)}
               </div>
-              <div class="product-quantity">
+              <div class="product-quantity
+                js-product-quantity-${matchingProduct.id}">
                 <span>
-                  Quantity: <span class="quantity-label">1</span>
+                  Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                 </span>
                 <span class="update-quantity-link link-primary">
                   Update
                 </span>
-                <span class="delete-quantity-link link-primary js-delete-link"
-                data-product-id="${matchingProduct.id}">
+                <span class="delete-quantity-link link-primary js-delete-link
+                  js-delete-link-${matchingProduct.id}"
+                  data-product-id="${matchingProduct.id}">
                   Delete
                 </span>
               </div>
@@ -111,12 +114,11 @@ export function renderOrderSummary() {
       `
     });
     return html;   //Returning the HTML since its inside the function which we use above in         cartSummaryHTML
+
   }
 
   document.querySelector('.js-order-summary')  //DOM for generating the html
     .innerHTML = cartSummaryHTML;
-
-  updateCartQuantity();
 
     /*
     DOM for the delete link  in which we then loop throug all (Delete(button) elements) assing them a unique dataset-id that we save inside productId
@@ -139,20 +141,12 @@ export function renderOrderSummary() {
             `.js-cart-item-container-${productId}`
           );
           container.remove();
-          updateCartQuantity();
+          
 
           renderPaymentSummary();
         });
       });
 
-      // Update the cartQuantity and big header in the middle which displays how many items is in the cart currently
-      function updateCartQuantity() {
-      
-        const cartQuantity = calculateCartQuantity();
-
-      document.querySelector('.js-return-to-home-link')
-        .innerHTML = `${cartQuantity} items`;
-    }
 
     // Updating the dom of the date above the item(product) when clicking on the radio input elements for shipping time and prices
     document.querySelectorAll('.js-delivery-option')
