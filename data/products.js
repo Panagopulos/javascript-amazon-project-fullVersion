@@ -3,6 +3,7 @@ import { formatCurrency } from '../scripts/utils/money.js';
 export function getProduct(productId) {
   
   let matchingProduct;  // Here will be saved the final product which we will see in checkout page
+
     // Looping through the products so we can compare the ids of the cart and products and If the product was added to the cart as a cartItem we save it as a final matchingProduct which we use inside cartSummaryHTML
   products.forEach((product) => {
     if(product.id === productId) {
@@ -35,7 +36,14 @@ class Product {
   getPrice() {
     return `$${formatCurrency(this.priceCents)}`
   }
+
+  extraInfoHTML() {
+    return '';
+  }
 }
+
+/*
+This is what we do in the code under but for every product. We create and new Instace for it which accepts parametr "productDetails" which have all the properties saved inside it and is then passed into constructor and then saved inside a properties of the class.
 
 const product1 = new Product({
   id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -52,8 +60,30 @@ const product1 = new Product({
     "apparel"
   ]
 });
+*/
+
+// This class extends the inheritence of Product so it has all the methods of the Product and we pass the remaining parameters through super(productDetails)
+class Clothing extends Product {
+ sizeChartLink;
+
+ constructor(productDetails) {
+  super(productDetails);
+  this.sizeChartLink = productDetails.sizeChartLink
+ }
+ //this overrides the parent method (parent overriding)
+ extraInfoHTML() {
+  //super.extraInfoHTML()
+  return `
+  <a href="${this.sizeChartLink}" target="_blank">
+    Size chart
+  </a>
+  `;
+ }
+}
 
 
+
+// This is our products array which includes objects of each product with all the necessary properties and since we need each object to be new Instance we use method map() where we loop through all the productDetails(properties as an object) and create new instance out of each object in the array. As well If we have type = clothing we create different instance called Clothing. To differentiate the Clothing products.
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -714,5 +744,8 @@ export const products = [
     ]
   }
 ].map((productDetails) => {
+  if (productDetails.type === 'clothing') {
+    return new Clothing(productDetails);
+  }
  return new Product(productDetails);
 });
