@@ -83,6 +83,7 @@ class Clothing extends Product {
 
 
 
+
 // This is our products array which includes objects of each product with all the necessary properties and since we need each object to be new Instance we use method map() where we loop through all the productDetails(properties as an object) and create new instance out of each object in the array. As well If we have type = clothing we create different instance called Clothing. To differentiate the Clothing products.
 export const products = [
   {
