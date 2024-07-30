@@ -1,5 +1,6 @@
 import { formatCurrency } from '../scripts/utils/money.js';
 
+
 export function getProduct(productId) {
   
   let matchingProduct;  // Here will be saved the final product which we will see in checkout page
@@ -85,26 +86,38 @@ export let products = [];
 
 //Function which accepts a callback function as a parametr from checkout.js and amazon.js we use the callback at the end of this code so we first get the response from backend and after that we can load all the data. 
 export function loadProducts(fun) {
- const xhr = new XMLHttpRequest();
+  console.log('Calling loadProducts');
+  const xhr = new XMLHttpRequest();
 
- xhr.addEventListener('load', () => {
-    products = JSON.parse(xhr.response).map((productDetails) => {
-      if (productDetails.type === 'clothing') {
-        return new Clothing(productDetails);
-      }
-     return new Product(productDetails);
+    xhr.addEventListener('load', () => {
+      console.log('XHR load event triggered');
+
+      products = JSON.parse(xhr.response).map((productDetails) => {
+        if (productDetails.type === 'clothing') {
+          return new Clothing(productDetails);
+        }
+      return new Product(productDetails);
     });
 
+    console.log('Products loaded and processed:', products);
     console.log('load products');
 
-    fun();
- });
+    if(typeof fun === 'function') {
+      try{
+        fun();
+      } catch (error) {
+        console.error('Error while calling the provided function', error)
+      }
+    } else {
+      console.error('Provided argument is not a function',fun);
+    }
+  });
 
- xhr.open('GET', 'https://supersimplebackend.dev/products');
- xhr.send();
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
 }
 
-loadProducts();
+
 
 /*
 // This is our products array which includes objects of each product with all the necessary properties and since we need each object to be new Instance we use method map() where we loop through all the productDetails(properties as an object) and create new instance out of each object in the array. As well If we have type = clothing we create different instance called Clothing. To differentiate the Clothing products.
