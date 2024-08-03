@@ -5,7 +5,7 @@ import { loadProducts } from '../../data/products.js';
 describe('test suite: renderOrderSummary', () => {
   const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
   const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
-
+  // Loads products from backend using before all since the backend takes time to response. done() is used to signal completion of an asynchronous test. 
   beforeAll((done) => {
     loadProducts(() => {
       done();

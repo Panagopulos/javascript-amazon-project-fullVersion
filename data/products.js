@@ -86,21 +86,16 @@ export let products = [];
 
 //Function which accepts a callback function as a parametr from checkout.js and amazon.js we use the callback at the end of this code so we first get the response from backend and after that we can load all the data. 
 export function loadProducts(fun) {
-  console.log('Calling loadProducts');
   const xhr = new XMLHttpRequest();
 
     xhr.addEventListener('load', () => {
-      console.log('XHR load event triggered');
-
+      
       products = JSON.parse(xhr.response).map((productDetails) => {
         if (productDetails.type === 'clothing') {
           return new Clothing(productDetails);
         }
       return new Product(productDetails);
     });
-
-    console.log('Products loaded and processed:', products);
-    console.log('load products');
 
     if(typeof fun === 'function') {
       try{
