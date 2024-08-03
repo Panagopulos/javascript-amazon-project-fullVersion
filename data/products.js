@@ -84,6 +84,28 @@ class Clothing extends Product {
 // Will accept products-data from backend
 export let products = [];
 
+// Does the HTML request to the backend and when we get the response it's going to the next step(-then()-), also saves the response inside a parameter of then. It is using Promise.
+export function loadProductsFetch() {
+  const promise = fetch('https://supersimplebackend.dev/products'
+  ).then((response) => {
+   return response.json(); // asynchronous code (promise) we must return the promise before going to the next step
+  }).then((productsData) => {
+    products = productsData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+    return new Product(productDetails);
+  });
+ });
+
+ return promise;
+}
+/*
+loadProductsFetch().then(() => {
+  console.log('next step');
+});
+*/
+
 //Function which accepts a callback function as a parametr from checkout.js and amazon.js we use the callback at the end of this code so we first get the response from backend and after that we can load all the data. 
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
