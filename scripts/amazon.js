@@ -1,7 +1,6 @@
 import { addToCart, 
   calculateCartQuantity} from '../data/cart.js';
 import { products, loadProducts } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
 
 loadProducts(renderProductsGrid);
 // Variable of array including object which are representing properties for
