@@ -2,6 +2,8 @@ import { addToCart,
   calculateCartQuantity} from '../data/cart.js';
 import { products, loadProducts } from '../data/products.js';
 
+
+
 loadProducts(renderProductsGrid);
 // Variable of array including object which are representing properties for
 // the eshop items so we are able to loop through this array and generate
@@ -100,3 +102,6 @@ function renderProductsGrid() {
       });
     }
 
+    alert(
+      "The site is still a work in progress, but the main features are functional and operational."
+    );
